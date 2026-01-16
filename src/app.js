@@ -15,7 +15,11 @@ app.use(cors({
 }));
 // imoporting routes
 import healthcheckRoutes from './routes/healthchec.routes.js';
+import authRoutes from './routes/auth.routes.js';
 app.use('/api/v1', healthcheckRoutes);
+app .use('/api/v1/auth', authRoutes);
+
+// default route
 
 app.get("/", (req, res) => {
   res.send("twelcome to backend ");
