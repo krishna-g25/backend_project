@@ -8,6 +8,7 @@ import {
   sendEmail,
 } from "../utils/mail.js";
 import jwt from "jsonwebtoken";
+import crypto from "crypto";
 
 const generateAccessAndRefreshTokens = async (userId) => {
   try {
@@ -52,12 +53,13 @@ const registerUser = asyncHandler(async (req, res) => {
 
   await user.save({ validateBeforeSave: false });
 
+  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173'
   await sendEmail({
     email: user?.email,
     subject: "Please verify your email",
     mailgenContent: emailVerificationMailgenContent(
       user.username,
-      `${req.protocol}://${req.get("host")}/api/v1/users/verify-email/${unHashedToken}`,
+      `${frontendUrl}/verify-email/${unHashedToken}`,
     ),
   });
 
@@ -214,12 +216,13 @@ const resendEmailVerification = asyncHandler(async (req, res) => {
 
   await user.save({ validateBeforeSave: false });
 
+  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173'
   await sendEmail({
     email: user?.email,
     subject: "Please verify your email",
     mailgenContent: emailVerificationMailgenContent(
       user.username,
-      `${req.protocol}://${req.get("host")}/api/v1/users/verify-email/${unHashedToken}`,
+      `${frontendUrl}/verify-email/${unHashedToken}`,
     ),
   });
 

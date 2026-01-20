@@ -5,8 +5,8 @@ const sendEmail = async (options) => {
   const mailGenerator = new Mailgen({
     theme: "default",
     product: {
-      name: "Task Manager",
-      link: "https://taskmanagelink.com",
+      name: "ERP Portal",
+      link: process.env.FRONTEND_URL || "http://localhost:5173",
     },
   });
 
@@ -24,7 +24,7 @@ const sendEmail = async (options) => {
   });
 
   const mail = {
-    from: "mail.taskmanager@example.com",
+    from: "noreply@erpportal.com",
     to: options.email,
     subject: options.subject,
     text: emailTextual,
